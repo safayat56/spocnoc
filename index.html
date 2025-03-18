@@ -4,119 +4,182 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>School Information</title>
-    
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        .header-title {
+            background-color: #00FF00;
+            color: white;
+            font-size: 2.5rem;
+            font-weight: bold;
+            padding: 20px 0;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .instruction-text {
+            color: white;
+            font-size: 1.25rem;
+            background-color: #00FF00;
+            padding: 10px 0;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .btn-custom {
+            font-size: 1.2rem;
+            padding: 10px 20px;
+            margin: 10px;
+        }
+
+        .school-code-column, .school-name-column, .district-column, .building-code-column {
+            position: relative;
+        }
+
+        .info-icon {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            font-size: 20px;
+            cursor: pointer;
+            color: black; /* Black color for the info icon */
+        }
+
+        .slider {
+            width: 200px;
+            margin: 20px;
+        }
+    </style>
 </head>
 <body>
 
-    <!-- Main container -->
     <div class="container text-center">
-        <!-- Main heading -->
+        <div class="logos">
+            <div class="logo-container">
+                <img src="https://www.schools.nyc.gov/sites/default/files/styles/medium/public/2022-08/schools-logo.png?itok=adJvhZsw" alt="NYC Public Schools Logo">
+                <h2>NYC Public Schools</h2>
+            </div>
+
+            <div class="logo-container">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/e/e2/DII_Tech_Logo.png" alt="DIIT Logo">
+                <h2>DIIT</h2>
+            </div>
+        </div>
+
         <header>
-            <h1>Spocnok: Empowering People with Disabilities</h1>
-            <p id="intro-text">
-                Spocnok is dedicated to helping individuals with disabilities by providing accessible tools, resources, and support systems.
-                Whether you're dealing with mobility challenges, vision impairments, or cognitive disabilities, Spocnok aims to make life easier
-                by offering innovative solutions that promote independence and inclusion.
-            </p>
-            <p>
-                Through user-friendly technologies, adaptive devices, and personalized assistance, Spocnok is committed to improving the quality of life
-                for people with disabilities. We believe that everyone deserves equal opportunities, and with Spocnok's support, individuals can overcome
-                barriers, engage with their communities, and live more fulfilling lives.
+            <h1 class="header-title" id="zoomableText">SPOC Network Operations Center</h1>
+            <p class="instruction-text" id="intro-text">
+                To look up a school or DOE building, enter one of the following details in the columns below:
             </p>
         </header>
 
-        <!-- Horizontal Row of 4 Editable Columns for School Info -->
         <div class="row justify-content-center mt-4">
-            <!-- First Column: Editable School Name -->
-            <div class="col-md-3">
-                <div class="p-3" style="border: 1px solid black;">
-                    <label for="schoolName1" class="visually-hidden">Enter School Name 1</label>
-                    <input type="text" class="form-control" id="schoolName1" placeholder="School Name 1" aria-label="Enter School Name 1" />
+            <div class="col-md-3 school-code-column">
+                <div class="p-3">
+                    <label for="schoolCode1" class="visually-hidden">Enter School Code 1</label>
+                    <input type="text" class="form-control input-field" id="schoolCode1" placeholder="School Code 1" oninput="storePreviousValue()" />
+                    <i class="fas fa-info-circle info-icon" data-bs-toggle="modal" data-bs-target="#infoModal" onclick="setInfo('School Code 1')"></i>
                 </div>
             </div>
 
-            <!-- Second Column: Editable School Name -->
-            <div class="col-md-3">
-                <div class="p-3" style="border: 1px solid black;">
+            <div class="col-md-3 school-name-column">
+                <div class="p-3">
                     <label for="schoolName2" class="visually-hidden">Enter School Name 2</label>
-                    <input type="text" class="form-control" id="schoolName2" placeholder="School Name 2" aria-label="Enter School Name 2" />
+                    <input type="text" class="form-control input-field" id="schoolName2" placeholder="School Name 2" oninput="storePreviousValue()" />
+                    <i class="fas fa-info-circle info-icon" data-bs-toggle="modal" data-bs-target="#infoModal" onclick="setInfo('School Name 2')"></i>
                 </div>
             </div>
 
-            <!-- Third Column: Editable District Borough Number -->
-            <div class="col-md-3">
-                <div class="p-3" style="border: 1px solid black;">
+            <div class="col-md-3 district-column">
+                <div class="p-3">
                     <label for="districtBoroughNumber" class="visually-hidden">Enter District Borough Number</label>
-                    <input type="text" class="form-control" id="districtBoroughNumber" placeholder="District Borough Number" aria-label="Enter District Borough Number" />
+                    <input type="text" class="form-control input-field" id="districtBoroughNumber" placeholder="District Borough Number" oninput="storePreviousValue()" />
+                    <i class="fas fa-info-circle info-icon" data-bs-toggle="modal" data-bs-target="#infoModal" onclick="setInfo('District Borough Number')"></i>
                 </div>
             </div>
 
-            <!-- Fourth Column: Editable Building Code -->
-            <div class="col-md-3">
-                <div class="p-3" style="border: 1px solid black;">
+            <div class="col-md-3 building-code-column">
+                <div class="p-3">
                     <label for="buildingCode" class="visually-hidden">Enter Building Code</label>
-                    <input type="text" class="form-control" id="buildingCode" placeholder="Building Code" aria-label="Enter Building Code" />
+                    <input type="text" class="form-control input-field" id="buildingCode" placeholder="Building Code" oninput="storePreviousValue()" />
+                    <i class="fas fa-info-circle info-icon" data-bs-toggle="modal" data-bs-target="#infoModal" onclick="setInfo('Building Code')"></i>
                 </div>
             </div>
         </div>
 
-        <!-- Section for Buttons -->
-        <section aria-labelledby="button-section">
+        <section>
             <div class="mt-4">
-                <!-- Enter Button -->
-                <button class="btn btn-secondary" id="enterButton" onclick="alert('Enter button clicked!')" aria-label="Enter Button">
-                    Enter
-                </button>
+                <button class="btn btn-secondary btn-custom" id="enterButton" onclick="submitData()">Enter</button>
             </div>
             <div class="mt-4">
-                <!-- Read Text Button -->
-                <button class="btn btn-primary" id="readTextButton" onclick="readText()" aria-label="Read Text Aloud">
-                    Read Text
-                </button>
+                <button class="btn btn-primary btn-custom" id="readTextButton" onclick="readText()">Read Text</button>
             </div>
         </section>
 
-        <!-- Hidden div to trigger screen reader -->
-        <div aria-live="assertive" id="screenReaderMessage" style="position: absolute; width: 1px; height: 1px; overflow: hidden;">
-            <!-- This content will be read when the button is clicked -->
+        <div aria-live="assertive" id="screenReaderMessage" style="position: absolute; width: 1px; height: 1px; overflow: hidden;"></div>
+    </div>
+
+    <!-- Information Modal -->
+    <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="infoModalLabel">Information</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="modalMessage">You can use adjust to make me bigger.</p>
+                    <label for="textSizeSlider" class="btn btn-info btn-custom">Adjust Text Size</label>
+                    <input type="range" id="textSizeSlider" class="slider" min="10" max="30" value="16" onchange="adjustTextSize()">
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-
-    <!-- Custom JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf"></script>
     <script>
-        // Function to trigger the browser's speech synthesis API and read the content
-        function readText() {
-            // If speech is already playing, stop it
-            if (window.speechSynthesis.speaking) {
-                console.log("Speech already in progress. Cancelling...");
-                window.speechSynthesis.cancel(); // Stop the current speech
-            }
+        function adjustTextSize() {
+            const textSize = document.getElementById('textSizeSlider').value;
+            document.getElementById('zoomableText').style.fontSize = textSize + 'px';
+        }
 
-            // Text to be read aloud
-            const textToRead = `
-                Spocnok is dedicated to helping individuals with disabilities by providing accessible tools, resources, and support systems.
-                Whether you're dealing with mobility challenges, vision impairments, or cognitive disabilities, Spocnok aims to make life easier
-                by offering innovative solutions that promote independence and inclusion.
-                
-                Through user-friendly technologies, adaptive devices, and personalized assistance, Spocnok is committed to improving the quality of life
-                for people with disabilities. We believe that everyone deserves equal opportunities, and with Spocnok's support, individuals can overcome
-                barriers, engage with their communities, and live more fulfilling lives.
-            `;
-            
-            // Initialize SpeechSynthesis API
+        function setInfo(field) {
+            let message = '';
+            if (field === 'School Code 1') {
+                message = 'Please enter the unique code for the school.';
+            } else if (field === 'School Name 2') {
+                message = 'Enter the full name of the school.';
+            } else if (field === 'District Borough Number') {
+                message = 'Please enter the district number and borough for the school.';
+            } else if (field === 'Building Code') {
+                message = 'Please provide the unique building code for the school.';
+            }
+            document.getElementById('modalMessage').innerText = message;
+        }
+
+        function submitData() {
+            const schoolCode1 = document.getElementById('schoolCode1').value;
+            const schoolName2 = document.getElementById('schoolName2').value;
+            const districtBoroughNumber = document.getElementById('districtBoroughNumber').value;
+            const buildingCode = document.getElementById('buildingCode').value;
+            if (!schoolCode1 || !schoolName2 || !districtBoroughNumber || !buildingCode) {
+                alert("Please fill in all fields before submitting.");
+            } else {
+                alert(`
+                    School Code: ${schoolCode1}\n
+                    School Name: ${schoolName2}\n
+                    District Borough Number: ${districtBoroughNumber}\n
+                    Building Code: ${buildingCode}
+                `);
+            }
+        }
+
+        function readText() {
+            const textToRead = "Spocnok is dedicated to helping individuals with disabilities by providing accessible tools, resources, and support systems.";
             const speech = new SpeechSynthesisUtterance(textToRead);
-            
-            // Set properties for speech (optional)
-            speech.rate = 0.8; // Slow down the speed to 0.8 (less than 1)
-            speech.pitch = 1; // Normal pitch (1 is default)
-            speech.volume = 1; // Full volume (0 to 1)
-            
-            // Speak the text aloud
+            speech.rate = 0.8;
+            speech.pitch = 1;
+            speech.volume = 1;
             window.speechSynthesis.speak(speech);
         }
     </script>
