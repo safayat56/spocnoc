@@ -36,18 +36,65 @@
             position: relative;
         }
 
-        .info-icon {
+        .info-button {
             position: absolute;
             top: 5px;
             right: 10px;
-            font-size: 20px;
+            font-size: 16px;
+            padding: 10px;
             cursor: pointer;
-            color: black; /* Black color for the info icon */
+            color: black;
+            background-color: lightgray;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: inline-block;
         }
 
+        .info-button.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        /* Style the slider */
         .slider {
-            width: 200px;
-            margin: 20px;
+            width: 100%; /* Full width */
+            margin-top: 20px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: #ddd;
+            height: 8px;
+            border-radius: 5px;
+        }
+
+        /* Slider thumb */
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #4CAF50;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #4CAF50;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        /* Make sure the text inside the button changes size, not the icon */
+        .info-text {
+            font-size: 16px; /* Default font size for the text under the input field */
+            margin-top: 10px;
+            color: black;
+            display: none; /* Hide by default */
+        }
+
+        .info-text.show {
+            display: block; /* Show when activated */
         }
     </style>
 </head>
@@ -78,7 +125,10 @@
                 <div class="p-3">
                     <label for="schoolCode1" class="visually-hidden">Enter School Code 1</label>
                     <input type="text" class="form-control input-field" id="schoolCode1" placeholder="School Code 1" oninput="storePreviousValue()" />
-                    <i class="fas fa-info-circle info-icon" data-bs-toggle="modal" data-bs-target="#infoModal" onclick="setInfo('School Code 1')"></i>
+                    <button class="info-button" id="infoBtn1" onclick="toggleText('infoText1')">
+                        <i class="fas fa-info-circle"></i>
+                    </button>
+                    <p id="infoText1" class="info-text">Please enter the unique code for the school.</p>
                 </div>
             </div>
 
@@ -86,7 +136,10 @@
                 <div class="p-3">
                     <label for="schoolName2" class="visually-hidden">Enter School Name 2</label>
                     <input type="text" class="form-control input-field" id="schoolName2" placeholder="School Name 2" oninput="storePreviousValue()" />
-                    <i class="fas fa-info-circle info-icon" data-bs-toggle="modal" data-bs-target="#infoModal" onclick="setInfo('School Name 2')"></i>
+                    <button class="info-button" id="infoBtn2" onclick="toggleText('infoText2')">
+                        <i class="fas fa-info-circle"></i>
+                    </button>
+                    <p id="infoText2" class="info-text">Enter the full name of the school.</p>
                 </div>
             </div>
 
@@ -94,7 +147,10 @@
                 <div class="p-3">
                     <label for="districtBoroughNumber" class="visually-hidden">Enter District Borough Number</label>
                     <input type="text" class="form-control input-field" id="districtBoroughNumber" placeholder="District Borough Number" oninput="storePreviousValue()" />
-                    <i class="fas fa-info-circle info-icon" data-bs-toggle="modal" data-bs-target="#infoModal" onclick="setInfo('District Borough Number')"></i>
+                    <button class="info-button" id="infoBtn3" onclick="toggleText('infoText3')">
+                        <i class="fas fa-info-circle"></i>
+                    </button>
+                    <p id="infoText3" class="info-text">Please enter the district number and borough for the school.</p>
                 </div>
             </div>
 
@@ -102,7 +158,10 @@
                 <div class="p-3">
                     <label for="buildingCode" class="visually-hidden">Enter Building Code</label>
                     <input type="text" class="form-control input-field" id="buildingCode" placeholder="Building Code" oninput="storePreviousValue()" />
-                    <i class="fas fa-info-circle info-icon" data-bs-toggle="modal" data-bs-target="#infoModal" onclick="setInfo('Building Code')"></i>
+                    <button class="info-button" id="infoBtn4" onclick="toggleText('infoText4')">
+                        <i class="fas fa-info-circle"></i>
+                    </button>
+                    <p id="infoText4" class="info-text">Please provide the unique building code for the school.</p>
                 </div>
             </div>
         </div>
@@ -114,47 +173,31 @@
             <div class="mt-4">
                 <button class="btn btn-primary btn-custom" id="readTextButton" onclick="readText()">Read Text</button>
             </div>
+
+            <!-- Font size slider for adjusting text inside the I button -->
+            <div class="adjust-size-button">
+                <input type="range" id="fontSizeSlider" class="slider" min="12" max="30" value="16" onchange="adjustTextSize()">
+            </div>
         </section>
 
         <div aria-live="assertive" id="screenReaderMessage" style="position: absolute; width: 1px; height: 1px; overflow: hidden;"></div>
     </div>
 
-    <!-- Information Modal -->
-    <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="infoModalLabel">Information</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p id="modalMessage">You can use adjust to make me bigger.</p>
-                    <label for="textSizeSlider" class="btn btn-info btn-custom">Adjust Text Size</label>
-                    <input type="range" id="textSizeSlider" class="slider" min="10" max="30" value="16" onchange="adjustTextSize()">
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf"></script>
     <script>
-        function adjustTextSize() {
-            const textSize = document.getElementById('textSizeSlider').value;
-            document.getElementById('zoomableText').style.fontSize = textSize + 'px';
+        // Toggle visibility of text under the input field when clicking the "I" button
+        function toggleText(infoId) {
+            const text = document.getElementById(infoId);
+            text.classList.toggle('show'); // Toggle visibility of text
         }
 
-        function setInfo(field) {
-            let message = '';
-            if (field === 'School Code 1') {
-                message = 'Please enter the unique code for the school.';
-            } else if (field === 'School Name 2') {
-                message = 'Enter the full name of the school.';
-            } else if (field === 'District Borough Number') {
-                message = 'Please enter the district number and borough for the school.';
-            } else if (field === 'Building Code') {
-                message = 'Please provide the unique building code for the school.';
-            }
-            document.getElementById('modalMessage').innerText = message;
+        // Function to adjust text size inside the I button
+        function adjustTextSize() {
+            const texts = document.querySelectorAll('.info-text'); // Select all info texts
+            const fontSize = document.getElementById('fontSizeSlider').value;
+            texts.forEach(function(text) {
+                text.style.fontSize = fontSize + 'px'; // Adjust the font size of the text
+            });
         }
 
         function submitData() {
