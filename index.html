@@ -96,19 +96,63 @@
         .info-text.show {
             display: block; /* Show when activated */
         }
+
+        /* Logo container adjustments */
+        .logos {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-container h2 {
+            margin: 0;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 767px) {
+            .logos {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .header-title {
+                font-size: 2rem;
+                padding: 15px;
+            }
+
+            .instruction-text {
+                font-size: 1rem;
+                padding: 8px 0;
+            }
+
+            .btn-custom {
+                font-size: 1rem;
+                padding: 10px 20px;
+            }
+
+            .info-button {
+                font-size: 16px;
+                padding: 6px;
+            }
+        }
     </style>
 </head>
 <body>
 
     <div class="container text-center">
         <div class="logos">
+            <!-- Removed the images, kept only the text -->
             <div class="logo-container">
-                <img src="https://www.schools.nyc.gov/sites/default/files/styles/medium/public/2022-08/schools-logo.png?itok=adJvhZsw" alt="NYC Public Schools Logo">
                 <h2>NYC Public Schools</h2>
             </div>
 
             <div class="logo-container">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/e/e2/DII_Tech_Logo.png" alt="DIIT Logo">
                 <h2>DIIT</h2>
             </div>
         </div>
